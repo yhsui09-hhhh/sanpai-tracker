@@ -29,46 +29,12 @@
     color: var(--text);
     padding: 8px;
   }
-  .topbar {
-    position: sticky; top: 0; z-index: 10;
-    background: var(--panel);
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    padding: 12px 8px;
-    margin-bottom: 12px;
+  .header {
+    display: flex; justify-content: space-between; align-items: baseline;
+    padding: 0 4px 8px;
+    color: var(--muted); font-size: 12px;
   }
-  .topbar .title {
-    font-size: 13px; color: var(--muted);
-    margin-bottom: 8px;
-    display: flex; justify-content: space-between;
-  }
-  .topbar .title .total { color: var(--text); font-weight: 700; font-size: 14px; }
-  .top-grid {
-    display: grid;
-    grid-template-columns: repeat(8, 1fr);
-    gap: 4px;
-    text-align: center;
-  }
-  .top-cell {
-    padding: 6px 0 5px;
-    border-radius: 6px;
-    background: #0d1117;
-  }
-  .top-cell .r { font-size: 11px; color: var(--muted); line-height: 1; font-weight: 600; }
-  .top-cell .n {
-    font-size: 22px; font-weight: 800;
-    line-height: 1.1; margin-top: 3px;
-    color: var(--text);
-  }
-  .top-cell.full     .n { color: var(--gold); }
-  .top-cell.three    .n { color: var(--amber); }
-  .top-cell.low      .n { color: var(--red); }
-  .top-cell.zero     .n { color: var(--muted); opacity: .35; }
-  .top-cell.over     .n { color: var(--red); font-style: italic; }
-  .top-cell.unknown { border: 1.5px dashed var(--muted); background: #161b22; }
-  .top-cell.unknown .r { color: var(--text); }
-  .top-cell.unknown .n { color: var(--muted); }
-  .top-cell.unknown.has .n { color: var(--text); }
+  .header .total { color: var(--text); font-weight: 700; font-size: 14px; }
 
   .tap-grid {
     display: grid;
@@ -79,7 +45,7 @@
     background: var(--panel);
     border: 1px solid var(--border);
     border-radius: 12px;
-    padding: 12px 6px 8px;
+    padding: 10px 6px 8px;
     text-align: center;
     cursor: pointer;
     transition: transform .05s, background .1s;
@@ -95,15 +61,25 @@
     align-items: center;
     gap: 4px;
   }
-  .btn .rank { font-size: 24px; font-weight: 800; line-height: 1; text-align: center; white-space: nowrap; }
-  .btn .rank.two-char { font-size: 14px; }
-  .btn .played { font-size: 11px; color: var(--muted); margin-top: 6px; }
-  .btn .played b { color: var(--text); font-size: 13px; }
+  .btn .rank { font-size: 32px; font-weight: 800; line-height: 1; text-align: center; white-space: nowrap; color: #79c0ff; }
+  .btn .rank.narrow { font-size: 26px; }
+  .btn .rank.cjk    { font-size: 18px; }
+  .btn .remain {
+    font-size: 20px; font-weight: 800; line-height: 1.1;
+    margin-top: 6px; color: var(--text);
+  }
+  .btn .played { font-size: 10px; color: var(--muted); margin-top: 2px; }
+  .btn .played b { color: var(--text); font-size: 11px; }
+
+  .btn.full     .remain { color: var(--gold); }
+  .btn.three    .remain { color: var(--amber); }
+  .btn.zero     .remain { color: var(--muted); opacity: .4; }
+  .btn.over     .remain { color: var(--red); font-style: italic; }
 
   .pill {
-    height: 36px;
-    border-radius: 18px;
-    font-size: 16px; line-height: 34px;
+    height: 32px;
+    border-radius: 16px;
+    font-size: 14px; line-height: 30px;
     text-align: center;
     cursor: pointer;
     border: 1.5px solid;
@@ -126,25 +102,20 @@
 
   @media (orientation: landscape) and (max-height: 500px) {
     body { padding: 6px; }
-    .topbar { padding: 8px 6px; margin-bottom: 8px; }
-    .topbar .title { margin-bottom: 4px; font-size: 11px; }
-    .top-grid { grid-template-columns: repeat(16, 1fr); gap: 3px; }
-    .top-cell { padding: 4px 0 3px; }
-    .top-cell .r { font-size: 10px; }
-    .top-cell .n { font-size: 16px; margin-top: 2px; }
+    .header { font-size: 11px; padding: 0 4px 6px; }
     .tap-grid { grid-template-columns: repeat(8, 1fr); gap: 6px; }
     .btn { padding: 6px 4px 4px; border-radius: 10px; }
-    .btn .rank { font-size: 16px; }
-    .btn .rank.two-char { font-size: 11px; }
-    .btn .played { font-size: 9px; margin-top: 2px; }
-    .btn .played b { font-size: 11px; }
+    .btn .rank { font-size: 22px; }
+    .btn .rank.narrow { font-size: 18px; }
+    .btn .rank.cjk    { font-size: 13px; }
+    .btn .remain { font-size: 14px; margin-top: 4px; }
+    .btn .played { font-size: 9px; margin-top: 1px; }
+    .btn .played b { font-size: 10px; }
     .pill { height: 26px; font-size: 12px; line-height: 24px; border-radius: 13px; }
     .footer button { padding: 8px; font-size: 13px; }
     .hint { font-size: 10px; margin-top: 6px; }
   }
 
-  .btn.exhausted { opacity: .55; }
-  .btn.exhausted:active { background: #58171a; }
   .btn.unknown {
     border-style: dashed;
     border-color: var(--muted);
@@ -165,12 +136,9 @@
 </style>
 </head>
 <body>
-<div class="topbar">
-  <div class="title">
-    <span>剩余张数</span>
-    <span class="total">总剩 <span id="total">54</span></span>
-  </div>
-  <div class="top-grid" id="topGrid"></div>
+<div class="header">
+  <span>大字 = 剩余张数</span>
+  <span class="total">总剩 <span id="total">54</span></span>
 </div>
 <div class="tap-grid" id="tapGrid"></div>
 <div class="footer">
@@ -181,6 +149,9 @@
 </div>
 <div class="hint">
   遇到董承就投了吧
+</div>
+<div class="hint">
+  © 来自上班上疯了的能工智人甲
 </div>
 <script>
 (() => {
@@ -197,28 +168,23 @@
   const played = RANKS.map(() => 0);
   const extra  = RANKS.map(() => 0);
   const histPerRank = RANKS.map(() => []);
-  const topGrid = document.getElementById('topGrid');
   const tapGrid = document.getElementById('tapGrid');
 
   function build() {
-    topGrid.innerHTML = '';
-    RANKS.forEach((info, i) => {
-      const c = document.createElement('div');
-      c.className = 'top-cell' + (info.unknown ? ' unknown' : '');
-      c.innerHTML = `<div class="r">${info.r}</div><div class="n">${info.max}</div>`;
-      topGrid.appendChild(c);
-    });
     tapGrid.innerHTML = '';
     RANKS.forEach((info, i) => {
       const b = document.createElement('div');
       b.className = 'btn' + (info.unknown ? ' unknown' : '');
+      const sizeClass = /[\u4e00-\u9fa5]/.test(info.r) ? ' cjk'
+                      : (info.r.length >= 2 ? ' narrow' : '');
       b.innerHTML = `
         <div class="btn-row">
           <button class="pill undo" data-act="undo" aria-label="撤销该点">↶</button>
-          <div class="rank${info.r.length >= 2 ? ' two-char' : ''}">${info.r}</div>
+          <div class="rank${sizeClass}">${info.r}</div>
           <button class="pill add"  data-act="add"  aria-label="补牌">补</button>
         </div>
-        <div class="played">已出 <b>0</b> / ${info.max}</div>
+        <div class="remain">${info.max}</div>
+        <div class="played">已出 <b>0</b></div>
       `;
       b.addEventListener('click', (e) => {
         const act = e.target.dataset.act;
@@ -245,34 +211,31 @@
       const effMax = info.max + extra[i];
       const left = effMax - played[i];
       totalLeft += left;
-      const top = topGrid.children[i];
-      top.classList.remove('full','three','low','zero','over','has');
-      top.querySelector('.n').textContent = left;
-      if (info.unknown) {
-        if (left > 0) top.classList.add('has');
-      } else if (info.max === 4) {
-        if (left < 0)        top.classList.add('over');
-        else if (left >= 4)  top.classList.add('full');
-        else if (left === 3) top.classList.add('three');
-        else if (left === 0) top.classList.add('zero');
-        else if (left <= 1)  top.classList.add('low');
-      } else {
-        if (left < 0)       top.classList.add('over');
-        else if (left === 0) top.classList.add('zero');
-        else                 top.classList.add('full');
-      }
       const btn = tapGrid.children[i];
-      btn.classList.toggle('exhausted', !info.unknown && left <= 0);
+      btn.classList.remove('full','three','low','zero','over');
+      if (info.unknown) {
+        // 未知牌不染色
+      } else if (info.max === 4) {
+        if (left < 0)        btn.classList.add('over');
+        else if (left >= 4)  btn.classList.add('full');
+        else if (left === 3) btn.classList.add('three');
+        else if (left === 0) btn.classList.add('zero');
+      } else {
+        if (left < 0)       btn.classList.add('over');
+        else if (left === 0) btn.classList.add('zero');
+        else                 btn.classList.add('full');
+      }
+      btn.querySelector('.remain').textContent = left;
       const denom = extra[i] > 0 ? `${info.max}+${extra[i]}` : `${info.max}`;
       btn.querySelector('.played').innerHTML = info.unknown
-        ? `未知 <b>${left}</b>`
-        : `已出 <b>${played[i]}</b> / ${denom}`;
+        ? `未知`
+        : `已出 <b>${played[i]}</b>/${denom}`;
     });
     document.getElementById('total').textContent = totalLeft;
   }
   document.getElementById('reset').addEventListener('click', () => {
     if (!confirm('开始新的一局？将清空所有记录。')) return;
-    played.forEach((_, i) => { played[i] = 0; extra[i] = 0; histPerRank[i].length = 0; });
+    played.forEach((_, i) => { played[i] = 0; extra[i] = 0; htsPerRank[i].length = 0; });
     refresh();
   });
   build();
