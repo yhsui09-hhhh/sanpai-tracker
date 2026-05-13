@@ -21,7 +21,7 @@
     --gold: #f1c34d;
     --green: #3fb950;
   }
-  * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; user-select: none; }
+  * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; user-select: none; touch-action: manipulation; }
   body {
     margin: 0;
     font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Segoe UI", sans-serif;
@@ -186,12 +186,19 @@
         <div class="remain">${info.max}</div>
         <div class="played">已出 <b>0</b></div>
       `;
-      b.addEventListener('click', (e) => {
-        const act = e.target.dataset.act;
+      const handle = (e) => {
+        const act = e.target && e.target.dataset && e.target.dataset.act;
         if (act === 'undo') { undoLast(i); return; }
         if (act === 'add')  { addOne(i);   return; }
         playOne(i);
-      });
+      };
+      // touchend: 防止 iOS 双击放大，同时手动触发 action
+      b.addEventListener('touchend', (e) => {
+        e.preventDefault();
+        handle(e);
+      }, { passive: false });
+      // click: 桌面鼠标用（手机上因 preventDefault 不会触发）
+      b.addEventListener('click', handle);
       tapGrid.appendChild(b);
     });
     refresh();
@@ -235,7 +242,7 @@
   }
   document.getElementById('reset').addEventListener('click', () => {
     if (!confirm('开始新的一局？将清空所有记录。')) return;
-    played.forEach((_, i) => { played[i] = 0; extra[i] = 0; htsPerRank[i].length = 0; });
+    played.forEach((_, i) => { played[i] = 0; extra[i] = 0; histPerRank[i].length = 0; });
     refresh();
   });
   build();
